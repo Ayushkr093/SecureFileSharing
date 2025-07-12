@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure File Sharing System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation Header -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secure File Sharing</span>
+                </div>
+                <div class="nav-menu" id="navMenu">
+                    <button class="nav-btn" onclick="showLogin()" id="loginBtn">Login</button>
+                    <button class="nav-btn secondary" onclick="showSignup()" id="signupBtn">Sign Up</button>
+                    <button class="nav-btn danger" onclick="logout()" id="logoutBtn" style="display: none;">Logout</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Landing Page -->
+            <div id="landingPage" class="page active">
+                <div class="hero">
+                    <div class="hero-content">
+                        <h1><i class="fas fa-cloud-upload-alt"></i> Secure File Sharing</h1>
+                        <p>A secure platform for uploading and sharing documents with advanced encryption and access control.</p>
+                        <div class="hero-buttons">
+                            <button class="btn primary large" onclick="showLogin()">
+                                <i class="fas fa-sign-in-alt"></i> Get Started
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="features">
+                    <div class="container">
+                        <h2>Features</h2>
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <i class="fas fa-upload"></i>
+                                <h3>Secure Upload</h3>
+                                <p>Upload .pptx, .docx, and .xlsx files securely</p>
+                            </div>
+                            <div class="feature-card">
+                                <i class="fas fa-lock"></i>
+                                <h3>Encrypted URLs</h3>
+                                <p>Generate encrypted download links for secure access</p>
+                            </div>
+                            <div class="feature-card">
+                                <i class="fas fa-users"></i>
+                                <h3>User Management</h3>
+                                <p>Separate access for Ops and Client users</p>
+                            </div>
+                            <div class="feature-card">
+                                <i class="fas fa-shield-alt"></i>
+                                <h3>Access Control</h3>
+                                <p>User-specific file access with token validation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login Page -->
+            <div id="loginPage" class="page">
+                <div class="form-container">
+                    <div class="form-card">
+                        <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+                        <div class="user-type-selector">
+                            <button class="user-type-btn active" data-type="client" onclick="selectUserType('client')">
+                                <i class="fas fa-user"></i> Client User
+                            </button>
+                            <button class="user-type-btn" data-type="ops" onclick="selectUserType('ops')">
+                                <i class="fas fa-user-tie"></i> Ops User
+                            </button>
+                        </div>
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label for="loginEmail">Email</label>
+                                <input type="email" id="loginEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="loginPassword">Password</label>
+                                <input type="password" id="loginPassword" required>
+                            </div>
+                            <button type="submit" class="btn primary full-width">
+                                <i class="fas fa-sign-in-alt"></i> Login
+                            </button>
+                        </form>
+                        <div class="form-footer">
+                            <p>Don't have an account? <a href="#" onclick="showSignup()">Sign up here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Signup Page -->
+            <div id="signupPage" class="page">
+                <div class="form-container">
+                    <div class="form-card">
+                        <h2><i class="fas fa-user-plus"></i> Client Sign Up</h2>
+                        <form id="signupForm">
+                            <div class="form-group">
+                                <label for="signupEmail">Email</label>
+                                <input type="email" id="signupEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signupPassword">Password</label>
+                                <input type="password" id="signupPassword" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                <input type="password" id="confirmPassword" required>
+                            </div>
+                            <button type="submit" class="btn primary full-width">
+                                <i class="fas fa-user-plus"></i> Sign Up
+                            </button>
+                        </form>
+                        <div class="form-footer">
+                            <p>Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Verification Page -->
+            <div id="verificationPage" class="page">
+                <div class="form-container">
+                    <div class="form-card">
+                        <h2><i class="fas fa-envelope-open"></i> Email Verification</h2>
+                        <div class="verification-info">
+                            <p>Please check your email for a verification link.</p>
+                            <p>Enter your verification token below:</p>
+                        </div>
+                        <form id="verificationForm">
+                            <div class="form-group">
+                                <label for="verificationToken">Verification Token</label>
+                                <input type="text" id="verificationToken" required>
+                            </div>
+                            <button type="submit" class="btn primary full-width">
+                                <i class="fas fa-check"></i> Verify Email
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ops Dashboard -->
+            <div id="opsDashboard" class="page">
+                <div class="dashboard-container">
+                    <div class="dashboard-header">
+                        <h2><i class="fas fa-user-tie"></i> Ops Dashboard</h2>
+                        <p>Upload and manage files</p>
+                    </div>
+
+                    <div class="upload-section">
+                        <div class="upload-card">
+                            <h3><i class="fas fa-cloud-upload-alt"></i> Upload File</h3>
+                            <form id="uploadForm" enctype="multipart/form-data">
+                                <div class="file-upload-area" id="fileUploadArea">
+                                    <i class="fas fa-file-upload"></i>
+                                    <p>Drag and drop files here or click to browse</p>
+                                    <p class="file-types">Supported: .pptx, .docx, .xlsx</p>
+                                    <input type="file" id="fileInput" accept=".pptx,.docx,.xlsx" hidden>
+                                </div>
+                                <button type="submit" class="btn primary" id="uploadBtn" disabled>
+                                    <i class="fas fa-upload"></i> Upload File
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="uploaded-files-section">
+                        <h3><i class="fas fa-files"></i> Recently Uploaded</h3>
+                        <div id="opsFilesList" class="files-list">
+                            <!-- Files will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client Dashboard -->
+            <div id="clientDashboard" class="page">
+                <div class="dashboard-container">
+                    <div class="dashboard-header">
+                        <h2><i class="fas fa-user"></i> Client Dashboard</h2>
+                        <p>Browse and download files</p>
+                    </div>
+
+                    <div class="files-section">
+                        <div class="files-header">
+                            <h3><i class="fas fa-folder-open"></i> Available Files</h3>
+                            <button class="btn secondary" onclick="loadClientFiles()">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                        </div>
+                        <div id="clientFilesList" class="files-grid">
+                            <!-- Files will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading...</p>
+            </div>
+        </div>
+
+        <!-- Notification Toast -->
+        <div id="toast" class="toast">
+            <div class="toast-content">
+                <i class="toast-icon"></i>
+                <span class="toast-message"></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}?v=20250112-fix"></script>
+</body>
+</html>
