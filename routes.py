@@ -62,7 +62,7 @@ def client_signup():
         email=data['email'],
         password_hash=generate_password_hash(data['password']),
         user_type='client',
-        is_verified=False
+        is_verified=True
     )
     
     # Generate verification token
@@ -289,7 +289,7 @@ def send_verification_email(email, verification_token):
         recipients=[email]
     )
     
-    verification_url = f"{request.host_url}verify?token={verification_token}"
+    verification_url = f"{verification_token}"
     
     msg.body = f"""
     Welcome to our File Sharing System!
