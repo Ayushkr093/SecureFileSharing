@@ -38,9 +38,9 @@ SQLALCHEMY_TRACK_MODIFICATIONS=False
 MAIL_SERVER=smtp.gmail.com
 MAIL_PORT=587
 MAIL_USE_TLS=True
-MAIL_USERNAME=your-email@gmail.com
-MAIL_PASSWORD=your-app-password
-MAIL_DEFAULT_SENDER=your-email@gmail.com
+MAIL_USERNAME='divanshlinkdin@gmail.com'
+MAIL_PASSWORD='poff tmxg lrno tjzg'
+MAIL_DEFAULT_SENDER='divanshlinkdin@gmail.com'
 
 # File Upload Configuration
 UPLOAD_FOLDER=uploads
