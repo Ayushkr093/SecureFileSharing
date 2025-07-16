@@ -288,7 +288,7 @@ def send_verification_email(email, verification_token):
         'Verify Your Email - File Sharing System',
         recipients=[email]
     )
-    
+    # this may be wrong 
     verification_url = f"{verification_token}"
     
     msg.body = f"""
